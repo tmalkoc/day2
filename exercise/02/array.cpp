@@ -29,6 +29,8 @@ array::array(array&& source) noexcept :
 array::~array()
 {
   delete[] ptr_;
+  ptr_ = nullptr;
+  size_ = 0;
 }
 
 int array::size() const
@@ -39,14 +41,14 @@ int array::size() const
 double array::at(const int i) const
 {
   if (i < 0 || size_ < i)
-    throw std::out_of_range("array::at(idx) - index is out of range. idx = " + std::to_string(i));
+    throw std::out_of_range("array::at(idx) - index is out of range. idx == " + std::to_string(i));
   return ptr_[i];
 }
 
 array& array::operator=(const array& other)
 {
-  delete[] ptr_;
   size_ = other.size_;
+  delete[] ptr_;
   ptr_ = new double[size_];
   for (int i = 0; i < size_; i++)
     ptr_[i] = other.ptr_[i];
