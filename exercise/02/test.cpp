@@ -24,7 +24,7 @@ public:
 		array a(size, value); 
 		Assert::AreEqual(size, a.size());
 		for(int i=0; i<a.size(); ++i)
-			Assert::AreEqual(value, a[i]);
+			Assert::AreEqual(value, a.at(i));
 		*/
 	}
 
@@ -32,7 +32,7 @@ public:
 	{
 		/*
 		array a(size, value);
-		auto func = [a]() { a[100]; };
+		auto func = [a]() { a.at(100); };
 		Assert::ExpectException<std::out_of_range>(func);
 		*/
 	}
@@ -41,7 +41,7 @@ public:
 	{
 		/*
 		array a(size, value);
-		auto func = [a]() { a[-2]; };
+		auto func = [a]() { a.at(-2); };
 		Assert::ExpectException<std::out_of_range>(func);
 		*/
 	}
@@ -54,7 +54,7 @@ public:
 		b = a;
 		Assert::AreEqual(size, b.size());
 		for (int i = 0; i < b.size(); ++i)
-			Assert::AreEqual(value, b[i]);
+			Assert::AreEqual(value, b.at(i));
 		*/
 	}
 
@@ -65,7 +65,7 @@ public:
 		array b(a);
 		Assert::AreEqual(size, b.size());
 		for (int i = 0; i < b.size(); ++i)
-			Assert::AreEqual(value, b[i]);
+			Assert::AreEqual(value, b.at(i));
 		*/
 	}
 
@@ -77,7 +77,7 @@ public:
 		Assert::AreEqual(0, a.size());
 		Assert::AreEqual(size, b.size());
 		for (int i = 0; i < b.size(); ++i)
-			Assert::AreEqual(value, b[i]);
+			Assert::AreEqual(value, b.at(i));
 		*/
 	}
 
