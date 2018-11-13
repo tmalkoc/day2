@@ -2,19 +2,19 @@
 #include "color.h"
 
 namespace {
-  double to_double_range(double d)
+  double to_allowed_color_range(double d)
   {
     return d < 0.0 ? 0.0 : 1.0 < d ? 1.0 : d;
   }
 
   int to_char_range(double d)
   {
-    return static_cast<int>(255.0 * to_double_range(d));
+    return static_cast<int>(255.0 * to_allowed_color_range(d));
   }
 }
 
 color::color(double r, double g, double b)
-  : red_(to_double_range(r)), green_(to_double_range(g)), blue_(to_double_range(b))
+  : red_(to_allowed_color_range(r)), green_(to_allowed_color_range(g)), blue_(to_allowed_color_range(b))
 {  }
 
 double color::get_red() const
@@ -34,17 +34,17 @@ double color::get_blue() const
 
 void color::set_red(double red)
 {
-  red_ = to_double_range(red);
+  red_ = to_allowed_color_range(red);
 }
 
 void color::set_green(double green)
 {
-  green_ = to_double_range(green);
+  green_ = to_allowed_color_range(green);
 }
 
 void color::set_blue(double blue)
 {
-  blue_ = to_double_range(blue);
+  blue_ = to_allowed_color_range(blue);
 }
 
 COLORREF color::get_color_ref() const
