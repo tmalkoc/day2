@@ -47,10 +47,13 @@ double array::at(const int i) const
 
 array& array::operator=(const array& other)
 {
-  size_ = other.size_;
-  delete[] ptr_;
-  ptr_ = new double[size_];
-  for (int i = 0; i < size_; i++)
-    ptr_[i] = other.ptr_[i];
+  if (this != &other)
+  {
+    size_ = other.size_;
+    delete[] ptr_;
+    ptr_ = new double[size_];
+    for (int i = 0; i < size_; i++)
+      ptr_[i] = other.ptr_[i];
+  }
   return *this;
 }

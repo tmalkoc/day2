@@ -4,17 +4,22 @@
 namespace {
   double to_allowed_color_range(double d)
   {
-    return d < 0.0 ? 0.0 : 1.0 < d ? 1.0 : d;
+    return 
+      d < color::min_value ? color::min_value :
+      color::max_value < d ? color::max_value :
+      d;
   }
 
   int to_char_range(double d)
   {
-    return static_cast<int>(255.0 * to_allowed_color_range(d));
+    return static_cast<int>((color::rgb_color_depth - 1) * to_allowed_color_range(d));
   }
 }
 
-color::color(double r, double g, double b)
-  : red_(to_allowed_color_range(r)), green_(to_allowed_color_range(g)), blue_(to_allowed_color_range(b))
+color::color(double red, double green, double blue) : 
+  red_(to_allowed_color_range(red)), 
+  green_(to_allowed_color_range(green)), 
+  blue_(to_allowed_color_range(blue))
 {  }
 
 double color::get_red() const
@@ -54,14 +59,17 @@ COLORREF color::get_color_ref() const
 
 double color::get_luminance() const
 {
-  return 0.2126*red_ + 0.7152*green_ + 0.0722*blue_;
+  return 
+    luminance_red * red_ +
+    luminance_green * green_ + 
+    luminance_blue * blue_;
 }
 
 bool operator==(const color& c1, const color& c2)
 {
-  const auto precision = 1. / 256.;
+  const auto precision = 1. / color::rgb_color_depth;
   return
-    (std::fabs(c1.get_red() - c2.get_red()) < precision) &&
-    (std::fabs(c1.get_green() - c2.get_green()) < precision) &&
-    (std::fabs(c1.get_blue() - c2.get_blue()) < precision);
+    std::fabs(c1.get_red() - c2.get_red()) < precision &&
+    std::fabs(c1.get_green() - c2.get_green()) < precision &&
+    std::fabs(c1.get_blue() - c2.get_blue()) < precision;
 }
