@@ -61,7 +61,7 @@ bool operator==(const color& c1, const color& c2)
 {
   const auto precision = 1. / 256.;
   return
-    (c1.get_red() - c2.get_red() < precision) &&
-    (c1.get_green() - c2.get_green() < precision) &&
-    (c1.get_blue() - c2.get_blue() < precision);
+    (std::fabs(c1.get_red() - c2.get_red()) < precision) &&
+    (std::fabs(c1.get_green() - c2.get_green()) < precision) &&
+    (std::fabs(c1.get_blue() - c2.get_blue()) < precision);
 }
